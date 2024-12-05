@@ -1,54 +1,89 @@
 package com.example.equis
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.os.Handler
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var usernameEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var loginButton: Button
+    private lateinit var progressBar: ProgressBar
+
+    // Credenciales predefinidas
+    private val validUsername = "admin"
+    private val validPassword = "123456"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-        // Configuración de insets para el diseño edge-to-edge
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        usernameEditText = findViewById(R.id.edtUsuario)
+        passwordEditText = findViewById(R.id.edtPassword)
+        loginButton = findViewById(R.id.btnLogin)
+        progressBar = findViewById(R.id.progressBar)
 
-        // Referencias a los elementos del layout
-        val edtUsuario: EditText = findViewById(R.id.edtUsuario)
-        val edtPassword: EditText = findViewById(R.id.edtPassword)
-        val btnLogin: Button = findViewById(R.id.btnLogin)
+        loginButton.setOnClickListener {
+            val username = usernameEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
 
-        // Credenciales simuladas
-        val usuarioCorrecto = "usuario1"
-        val passwordCorrecta = "123456"
-
-        btnLogin.setOnClickListener {
-            val usuario = edtUsuario.text.toString()
-            val password = edtPassword.text.toString()
-
-            if (usuario.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
-            } else if (usuario == usuarioCorrecto && password == passwordCorrecta) {
-                // Login exitoso: navega a MainActivity
-                Toast.makeText(this, "¡Inicio de sesión exitoso!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish() // Finaliza LoginActivity para evitar regresar con el botón atrás
-            } else {
-                // Credenciales incorrectas
-                Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
+            if (validateInput(username, password)) {
+                showProgressBar()
+                performLogin(username, password)
             }
         }
+    }
+
+    private fun validateInput(username: String, password: String): Boolean {
+        if (username.isEmpty()) {
+            usernameEditText.error = "El usuario es obligatorio"
+            return false
+        }
+        if (password.isEmpty()) {
+            passwordEditText.error = "La contraseña es obligatoria"
+            return false
+        }
+        return true
+    }
+
+    private fun showProgressBar() {
+        progressBar.visibility = ProgressBar.VISIBLE
+        loginButton.isEnabled = false // Deshabilitar botón mientras se procesa el inicio
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = ProgressBar.GONE
+        loginButton.isEnabled = true
+    }
+
+    private fun performLogin(username: String, password: String) {
+        // Simula un retraso para procesar el inicio de sesión
+        Handler().postDelayed({
+            hideProgressBar()
+            if (username == validUsername && password == validPassword) {
+                saveUsername(username) // Guarda el nombre del usuario
+                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+                navigateToMain()
+            } else {
+                Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+            }
+        }, 2000) // Simula un proceso de 2 segundos
+    }
+
+    private fun saveUsername(username: String) {
+        val sharedPreferences: SharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("username", username) // Guarda el nombre de usuario
+        editor.apply()
+    }
+
+    private fun navigateToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // Cierra la actividad de inicio de sesión
     }
 }

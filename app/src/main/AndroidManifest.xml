@@ -12,31 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Equis"
         tools:targetApi="31" >
+
         <activity
-            android:name=".ui.perfil.PerfilActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PerfilActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PerfiklActivity"
-            android:exported="false"
-            android:label="@string/title_activity_perfikl"
-            android:theme="@style/Theme.Equis.NoActionBar" />
-        <activity
-            android:name=".AccesorioActivity"
-            android:exported="false" />
-        <!--
-<activity
             android:name=".LoginActivity"
-            android:exported="true">  Agregar android:exported="true" puede ser necesario para algunas versiones
+            android:exported="true"><!--  Agregar android:exported="true" puede ser necesario para algunas versiones-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
