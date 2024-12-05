@@ -15,8 +15,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
 
     // Credenciales predefinidas
-    private val validUsername = "admin"
-    private val validPassword = "123456"
+    private val users = mapOf(
+        "admin" to "123456",
+        "cliente" to "654321"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showProgressBar() {
         progressBar.visibility = ProgressBar.VISIBLE
-        loginButton.isEnabled = false // Deshabilitar botón mientras se procesa el inicio
+        loginButton.isEnabled = false
     }
 
     private fun hideProgressBar() {
@@ -61,29 +63,30 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performLogin(username: String, password: String) {
-        // Simula un retraso para procesar el inicio de sesión
         Handler().postDelayed({
             hideProgressBar()
-            if (username == validUsername && password == validPassword) {
-                saveUsername(username) // Guarda el nombre del usuario en SharedPreferences
+            if (users[username] == password) {
+                saveUserDetails(username)
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
                 navigateToMain()
             } else {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
             }
-        }, 2000) // Simula un proceso de 2 segundos
+        }, 2000)
     }
 
-    private fun saveUsername(username: String) {
+    private fun saveUserDetails(username: String) {
+        val userType = if (username == "admin") "admin" else "cliente"
         val sharedPreferences: SharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("username", username)
+        editor.putString("userType", userType)
         editor.apply()
     }
 
     private fun navigateToMain() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // Cierra la actividad de inicio de sesión
+        finish()
     }
 }
