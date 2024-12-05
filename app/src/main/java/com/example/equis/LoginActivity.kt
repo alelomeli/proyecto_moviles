@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
         Handler().postDelayed({
             hideProgressBar()
             if (username == validUsername && password == validPassword) {
-                saveUsername(username) // Guarda el nombre del usuario
+                saveUsername(username) // Guarda el nombre del usuario en SharedPreferences
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
                 navigateToMain()
             } else {
@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
     private fun saveUsername(username: String) {
         val sharedPreferences: SharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putString("username", username) // Guarda el nombre de usuario
+        editor.putString("username", username)
         editor.apply()
     }
 
