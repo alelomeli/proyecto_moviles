@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
     // Credenciales predefinidas
     private val users = mapOf(
         "admin" to "123",
-        "cliente" to "1234"
+        "cliente" to "123"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
