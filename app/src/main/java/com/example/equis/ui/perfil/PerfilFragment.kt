@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.equis.AgregarUsuarioActivity
 import com.example.equis.R
+
 class PerfilFragment : Fragment() {
 
     private lateinit var txtUsuario: TextView

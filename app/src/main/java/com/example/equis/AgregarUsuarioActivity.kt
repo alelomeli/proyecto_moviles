@@ -6,38 +6,30 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class AgregarUsuarioActivity : AppCompatActivity() {
+
     private lateinit var editTextNombre: EditText
     private lateinit var editTextTelefono: EditText
     private lateinit var editTextCorreo: EditText
-    private lateinit var editTxtContrasena: EditText  // Campo de contraseña
+    private lateinit var editTxtContrasena: EditText
     private lateinit var switchCliente: Switch
     private lateinit var switchAdmin: Switch
     private lateinit var buttonRegistrar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_agregar_usuario)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         // Inicialización de los elementos del formulario
-        editTextNombre = findViewById(R.id.editTxtContrasena)
-        editTextTelefono = findViewById(R.id.editTextPhone)
-        editTextCorreo = findViewById(R.id.editTextText2)
-        editTxtContrasena = findViewById(R.id.editTxtContrasena)  // Inicializar el campo de contraseña
-        switchCliente = findViewById(R.id.switch1)
-        switchAdmin = findViewById(R.id.switch2)
-        buttonRegistrar = findViewById(R.id.button3)
+        editTextNombre = findViewById(R.id.editTxtNombre)
+        editTextTelefono = findViewById(R.id.editTxtTelefono)
+        editTextCorreo = findViewById(R.id.editTxtEmail)
+        editTxtContrasena = findViewById(R.id.editTxtContrasena)
+        switchCliente = findViewById(R.id.switchCliente)
+        switchAdmin = findViewById(R.id.switchAdmin)
+        buttonRegistrar = findViewById(R.id.buttonRegistrar)
 
         // Evitar que ambos switches se activen al mismo tiempo
         switchCliente.setOnCheckedChangeListener { _, isChecked ->
@@ -57,7 +49,7 @@ class AgregarUsuarioActivity : AppCompatActivity() {
             val nombre = editTextNombre.text.toString()
             val telefono = editTextTelefono.text.toString()
             val correo = editTextCorreo.text.toString()
-            val contrasena = editTxtContrasena.text.toString()  // Obtener la contraseña del campo
+            val contrasena = editTxtContrasena.text.toString()
             val tipoUsuario = if (switchCliente.isChecked) "cliente" else "administrador"
 
             // Validación de los campos
@@ -71,10 +63,10 @@ class AgregarUsuarioActivity : AppCompatActivity() {
                 editor.putString("telefono", telefono)
                 editor.putString("correo", correo)
                 editor.putString("userType", tipoUsuario)
-                editor.putString("password", contrasena)  // Guardar la contraseña
+                editor.putString("password", contrasena) // Guardar la contraseña
                 editor.apply()
 
-                // Redirigir a la pantalla principal o al perfil
+                // Redirigir a la pantalla principal
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -82,5 +74,3 @@ class AgregarUsuarioActivity : AppCompatActivity() {
         }
     }
 }
-
-
