@@ -1,6 +1,7 @@
 package com.example.equis.ui.perfil
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.equis.AgregarUsuarioActivity
 import com.example.equis.R
 
 class PerfilFragment : Fragment() {
@@ -33,6 +35,11 @@ class PerfilFragment : Fragment() {
         // Ocultar botón si el usuario es cliente
         if (userType == "cliente") {
             btnAgregarUsuario.visibility = View.GONE
+        } else {
+            btnAgregarUsuario.setOnClickListener {
+                val intent = Intent(requireContext(), AgregarUsuarioActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         return view

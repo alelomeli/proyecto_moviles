@@ -12,5 +12,6 @@
     <string name="menu_gallery">Clases Grupales</string>
     <string name="menu_slideshow">Suplementos</string>
     <string name="menu_accesorios">Accesorios</string>
+    <string name="menu_logout">Logout</string>
     <string name="title_activity_perfikl">PerfiklActivity</string>
 </resources>

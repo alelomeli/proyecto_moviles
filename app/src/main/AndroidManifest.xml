@@ -12,17 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Equis"
         tools:targetApi="31" >
+        <activity
+            android:name=".AgregarUsuarioActivity"
+            android:exported="false" />
 
         <activity
             android:name=".LoginActivity"
-            android:exported="true"><!--  Agregar android:exported="true" puede ser necesario para algunas versiones-->
+            android:exported="true" > <!-- Agregar android:exported="true" puede ser necesario para algunas versiones -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
